@@ -1,76 +1,67 @@
 <template>
-    <v-card>
-     <v-card-title class="headline">
-       Welcome to the Vuetify + Nuxt.js template
-     </v-card-title>
-     <v-card-text>
-       <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-       <p>
-         For more information on Vuetify, check out the <a
-           href="https://vuetifyjs.com"
-           target="_blank"
-           rel="noopener noreferrer"
-         >
-           documentation
-         </a>.
-       </p>
-       <p>
-         If you have questions, please join the official <a
-           href="https://chat.vuetifyjs.com/"
-           target="_blank"
-           rel="noopener noreferrer"
-           title="chat"
-         >
-           discord
-         </a>.
-       </p>
-       <p>
-         Find a bug? Report it on the github <a
-           href="https://github.com/vuetifyjs/vuetify/issues"
-           target="_blank"
-           rel="noopener noreferrer"
-           title="contribute"
-         >
-           issue board
-         </a>.
-       </p>
-       <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-       <div class="text-xs-right">
-         <em><small>&mdash; John Leider</small></em>
-       </div>
-       <hr class="my-3">
-       <a
-         href="https://nuxtjs.org/"
-         target="_blank"
-         rel="noopener noreferrer"
-       >
-         Nuxt Documentation
-       </a>
-       <br>
-       <a
-         href="https://github.com/nuxt/nuxt.js"
-         target="_blank"
-         rel="noopener noreferrer"
-       >
-         Nuxt GitHub
-       </a>
-     </v-card-text>
-     <v-card-actions>
-       <v-spacer />
-       <v-btn
-         color="primary"
-         nuxt
-         to="/inspire"
-       >
-         Continue
-       </v-btn>
-     </v-card-actions>
-   </v-card>
+  <v-card
+    class="mx-auto my-12"
+    max-width="374"
+  >
+
+    <v-img
+      height="250"
+      :src="`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`"
+    ></v-img>
+
+    <v-card-title>{{movie.title}}</v-card-title>
+
+    <v-card-text>
+      <v-row
+        align="center"
+        class="mx-0"
+      >
+        <v-rating
+          :value="getAverageVotesBy5"
+          color="amber"
+          dense
+          half-increments
+          readonly
+          size="14"
+        ></v-rating>
+
+        <div class="grey--text ms-4">
+          {{getAverageVotesBy5}} ({{ movie.vote_count }})
+        </div>
+      </v-row>
+
+      
+    </v-card-text>
+
+   
+    <v-card-text>
+        Release Date : {{ formatDate(movie.release_date) }}
+    </v-card-text>
+
+  </v-card>
 </template>
 
 <script>
  export default {
-     
+     props:{
+        movie:{
+            type:Object
+        }
+     },
+     computed:{
+        getAverageVotesBy5(){
+            return this.movie.vote_average * 0.5
+        }
+     },
+     methods:{
+        formatDate(dateString) {
+      const date = new Date(dateString)
+      const day = date.getDate().toString().padStart(2, '0')
+      const month = (date.getMonth() + 1).toString().padStart(2, '0')
+      const year = date.getFullYear()
+      return `${day}-${month}-${year}`
+    },
+     }
  }
 </script>
 
