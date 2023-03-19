@@ -3,11 +3,19 @@
     class="mx-auto my-12"
     max-width="374"
   >
-
+  <div class="mainImgHolder">
     <v-img
       height="250"
       :src="`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`"
-    ></v-img>
+    />
+    <v-img
+    v-if="movie.adult"
+    class="plus18"
+      height="50"
+      width="50"
+      :src="require('@/assets/imgs/18-plus-age-restriction-icon.svg')"
+    />
+  </div>
 
     <v-card-title>{{movie.title}}</v-card-title>
 
@@ -66,5 +74,12 @@
 </script>
 
 <style lang="scss" scoped>
-
+.mainImgHolder{
+  position: relative;
+  .plus18{
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
 </style>
